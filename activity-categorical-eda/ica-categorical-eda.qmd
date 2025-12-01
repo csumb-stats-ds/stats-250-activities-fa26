@@ -1,0 +1,139 @@
+---
+title: "Activity: Categorical Variable Exploratory Data Analysis"
+author: "Group Number #X"
+format: html
+embed-resources: true
+execute:
+  warning: false
+  echo: true
+  error: false
+---
+
+Team Member Names: <insert names here>
+
+
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(ggformula)
+library(mosaic)
+```
+
+
+
+## Two Categorical Variables EDA
+
+Let's explore EDA for two categorical data using the Sickle Cell Anemia example. 
+
+Here is the code from your packet that produces a frequency table, then a contingency table contingent on the *carrier status* from the frequency table. 
+```{r}
+#| label: load-data-malaria
+mal <- read_csv("malaria-sickle-cell.csv", show_col_types = FALSE) # reads in our raw data
+```
+
+```{r}
+#| label: table-options
+tally(~ Malaria | Carrier, data = mal) #prints to screen a frequency table with Malaria as the rows and Carrier as the columns
+
+tally(~Malaria | Carrier, data = mal, format = "prop") # Table 1: prints to screen a contingency relative frequency table contingent on carrier status 
+```
+
+### 1.1
+
+Translate into words the proportion that the value 0.866667 represents. 
+
+> Insert answer here.
+
+
+### 1.2. 
+Modify the code below to produce contingency relative frequency table that is contingent on *malaria status* from the original frequency table. 
+
+```{r}
+#| label: cond-malaria
+_____(~ _____ | _____, data = _____, format = ______ ) # Table 2
+```
+
+### 1.3. 
+What value represents the proportion of people in our sample that have had malaria that are carriers?
+
+> Insert answer here.
+
+
+Here is our barplot for the conditional proportions in Table 1 above, conditioned on carrier status.
+
+```{r}
+#| label: graph-carrier
+
+gf_props(~ Malaria | Carrier, 
+         data=mal,     # proportional barchart of Carrier data
+         fill = ~ Malaria,       # color (fill of bars) split by Malaria
+         ylab = "Proportion",
+         xlab = "Malaria Status") |>    
+  gf_refine(scale_fill_manual(
+    values = c("grey24", "grey64"))) |>    # sets our two colors (optional)
+  gf_theme(theme_bw())   # makes the background easier for printing (optional)
+```
+
+
+### 1.4. 
+Modify the code below to make a graphic for your contingency relative frequency table that was conditioned on malaria status (from question #2). To the <additional arguments here> line, add the necessary argument(s) to set the proportion axis limit from 0 to 1 (bar charts should always start at 0!). (Hint: what have you learned before that can let you adjust axis limits? Once you figure it out, you should also add it to the plot above so we can compare between graphs better).
+
+```{r}
+#| label: new-graph-malaria
+
+gf_props(~ ______ | ______, data=mal,      # proportional barchart of Malaria data
+       fill= ~ ______,           # color (fill of bars) split by Carrier
+       ylab = "______", 
+       xlab = "______") |>      # add labels
+  <additional arguments here>              # add axis limit or other arguments
+``` 
+
+
+### 1.5. 
+What do you notice when you compare the two graphs? Which is a better representation of the data to answer the research question?
+
+> Insert answer here.
+
+
+
+### 1.6. 
+
+In our original data, we had a similar number of individuals in each Yes/No category.  Let's look at a second set of data when our two groups have different sizes. Redo Table 1 and 2 from above and their respective bar plots, for both counts and conditional relative frequencies (if you are short on time, at minimum do the four bar plots so you can answer #7).
+
+```{r}
+#| label: load-malaria-2-data
+  mal2 <- read_csv("malaria-sickle-cell-2.csv", show_col_types = FALSE)
+```
+
+
+```{r}
+#| label: new-tables-new-data
+
+
+```
+
+
+### 1.7. 
+
+How does your perspective change for the frequency vs. relative frequency plots?
+
+> Insert Answer Here
+
+
+
+
+
+*** 
+### Bonus Round!
+
+The poinsettia raw data is included in `poinsettias.csv`. See if you can recreate the graphics from the packet from this data. 
+
+<Insert code chunk here>
+
+
+
+
+
+
