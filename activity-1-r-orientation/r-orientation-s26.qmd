@@ -30,6 +30,7 @@ If you haven't already, click on `r-orientation-student.Rproj` under the Files t
 
 
 #### 1.1 Code Chunks
+
 We have to tell our document what text is code and what text is just text. One way we can distinguish code in an .qmd file is to put it in a **code chunk**. Within a code chunk, which is set apart by a line of ` ```{r} ` to begin and a line of ` ``` ` to end, every line is read as executable R code.
 
 For Windows OS- the key combination Ctrl+Alt+I creates a new code chunk (for Mac OS Cmd+Option+I). You could instead use the green "Insert" button in the RMarkdown pane menu bar and select R to create a new code chunk. Insert a code chunk and then enter and run the code `?names`. (The code is what is inside the ` `, not including them.) What happens? 
@@ -48,6 +49,7 @@ For data that is not already stored in a R library, we must read in the data usi
 
 
 #### 2.1. Data Object Creation
+
 Run the code below to read in the data file called "BodyTemp.csv" and call it `body`. A CSV file stands for Comma Separated Values. When saved, it uses a comma to indicate separate values. Once we read in and name a data set in R, we call it a **dataframe**. Place your cursor after the line of code chunk below and press Ctrl+Enter to run that line of code.
 
 ```{r}
@@ -55,8 +57,12 @@ Run the code below to read in the data file called "BodyTemp.csv" and call it `b
 body <- read.csv("BodyTemp.csv")
 ```
 
+
 #### 2.2. Looking at the Data
-Notice that each time you load in a data set, it appears with a brief description under the Environment Tab under Data (top right pane). You can click on the grid icon next to the data file to view the dataframe. Look at the `body` data. Notice there are three columns - these are our variables. Each row represents an individual. Each individual had their body temperature, pulse, and gender measured and recorded. The format of the data - rows are individual cases and columns are the variables measured on each individual case - is the standard format for almost all analyses we will do in STAT 250.  
+
+Notice that each time you load in a data set, it appears with a brief description under the Environment Tab under Data (top right pane). You can click on the grid icon next to the data file to view the dataframe. Look at the `body` data. Notice there are three columns - these are our variables. Each row represents an individual. Each individual had their body temperature, pulse, and gender measured and recorded. The format of the data - rows are individual cases and columns are the variables measured on each individual case - is the standard format for almost all analyses we will do in STAT 250. 
+
+
 #### 2.3 Functions
 
 We often want to do something with the raw data though -- so we use a **function**. Run the code below. (You can run individual lines using the method taught above in 2.1, but you can execute the entire code chunk by using the green play button on the right of each code chunk.) Annotate the code using the comments to indicate what each line of code does.
@@ -79,6 +85,7 @@ tally(~ Gender, data = body) # What does this code do?
 
 
 #### 2.4 Try it Yourself!
+
 Create a new R code chunk and calculate the mean for the *Pulse* variable. Don't forget that capitalization and syntax matter!
 
 
