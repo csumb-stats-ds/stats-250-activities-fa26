@@ -1,0 +1,251 @@
+---
+title: "Activity: Exploratory Data Analysis"
+author: "Group Number #X"
+format: html
+embed-resources: true
+execute:
+  warning: false
+  echo: true
+  error: false
+---
+
+Team Member Names: <insert names here>
+
+
+
+Run this code chunk first to load the packages with our functions (use the green arrow --------->)
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(ggformula)
+library(mosaic)
+```
+
+
+
+## Reading in the Data
+
+We must always read in the data into the RMarkdown documents, since it is a self-contained document. If we skip this step (or try to use Import Dataset) we will get an error when we knit the document. Run the line of code below to read in the `penguin.csv` dataset. 
+
+```{r}
+#| label: read-data
+penguins <- read_csv("penguins.csv")
+```
+After reading in the data, it is a good habit to always run the function `names()` on our dataset. This will print a list of the variable/column names. *Remember: R is case-sensitive, so we should note any capitalization!* Insert a code chunk and run the code `names(penguins)` to print out the variable names in the `penguins` dataset.
+
+< Insert code chunk here >  
+
+
+
+## Part 1 - Histograms
+
+Let's make a histogram for Bill Length for all the species combined (run the code chunk below). 
+
+```{r}
+#| label: hist-bill-length
+
+gf_histogram( ~ bill_length_mm, data = penguins)
+```
+
+### 1.1
+
+Identify each part of the code above relative to your formula template (below): 
+
+`_goal_(~ _x_, data = _mydata_)`
+
+In that template, `goal`, `x`, and `mydata` are placeholders that are changed for specifics in actual code. In other words, what code is the goal in the line of code above (line 40)? What actual code fills the same position as "goal" in the template? What takes the place of "x"? Fill in the blanks in the table below using this structure [the point here is to recognize the fill in the blank aspect of code and how each piece has a purpose]. 
+
+Template |  Filled in with  |  Purpose
+---------|------------------|----------------
+goal     |                  | 
+x        |                  | x-axis variable
+mydata   |                  | 
+
+
+There are three species of penguins included in the dataframe: *Adelie*, *Gentoo*, and *Chinstrap*.  That means that the histogram we made above didn't really tell us much! We want to know the bill lengths *separated* by species. 
+
+To do so, we have to introduce a new part into our formula:
+
+`goal( ~ x | z, data = mydata)`
+
+You can translate this as we want to make something (`goal()`) of x (` ~ x`), split into panes by z (` | z`). Remember, `x` and `z` must be variables in the `mydata` dataframe. In our case, we want to make a histogram of bill length split by `species`. Using `| z` will automatically split your numeric variable `x` by as many groups as you have in `z` and display them all side by side. Note: when using ` | z`, you must use the `data=` argument to designate the dataframe for the code to work; using `$` will not work. 
+
+
+### 1.2
+
+In the code chunk below, replace the blanks in the code to produce a plot similar to the plots from your notes, that show the bill length separated by species within one plot. *Remember, the blanks can only be filled in with* **variable** *names. Revisit your* `names()` *output above if needed.*
+
+```{r}
+#| label: hist-BL-species
+gf_histogram( ~ _______ | _______, data = ______)
+```
+
+Discuss with your team: Why does the code above have that structure? Explain what each part does to each other.
+
+> Insert Answer Here
+
+
+### 1.3 
+
+That is not an attractive or informative histogram - let's add appropriate labels. We do this by adding new arguments to our function (done for you below). We separate each argument in our function with a comma.  We also adjusted the `binwidth`.
+
+```{r}
+#| label: hist-arguments
+gf_histogram( ~ bill_length_mm | species, 
+              data = penguins, 
+              binwidth = 1, 
+              xlab = "Bill Length in mm", 
+              ylab = "Number of Penguins")
+```
+
+Identify with your team the arguments added to this plot and what they changed from your plot in #2 Also discuss why all three are good arguments to include. 
+
+Argument |  Purpose
+---------|----------------
+xlab     |  
+ylab     |
+binwidth |
+
+
+### 1.4 
+
+Run the code below - it will produce an error message because of a missing comma (this is a common error).  How does R tell you where the comma is missing?  Fix the error by adding in the comma and run the code. 
+
+```{r}
+#| label: hist-error
+gf_histogram( ~ bill_length_mm | species, 
+              data = penguins, binwidth = 1, 
+              xlab = "Bill Length in mm" 
+              ylab = "Number of Penguins")
+```
+
+
+***
+
+### 1.5 BONUS QUESTION
+
+You can get a quick look at the formula structure accepted by a graphic function by running the function in a line alone. Adding a `?` in front of it will bring up the help page to describe the key parts more. Run the code below. 
+
+```{r}
+#| label: help-hist
+#| eval: false
+# the eval: false above will stop this code chunk from running when you render the whole document
+?gf_histogram
+```
+
+Under "key attributes", it lists other arguments you could add to the function. Try to add or change at least one to the code below. If you need more explanation on what values an argument can take, try the `?` or call someone over. Adjust the `binwidth` as well.
+
+```{r}
+#| label: hist-5-arguments
+
+gf_histogram( ~ bill_length_mm | species, 
+              data = penguins, 
+              binwidth = 1, 
+              xlab = "Bill Length in mm", 
+              ylab = "Number of Penguins")
+```
+
+
+An alternative to the `data = mydata` specification is to feed the data frame into the function using a pipe `|>`. The advantage of this is it make auto complete of variable names easier within the `gf_histogram()` function.
+
+```{r}
+#| label: hist-5-pipe
+
+penguins |> 
+  gf_histogram(~ bill_length_mm)
+```
+
+
+Note that another way to stack the histograms is to use an additional function called `gf_facet_wrap` and move the `|z` portion into the new function connected with a pipe `%>%`, specify the number of rows as the number of histograms you want to stack on top of each other. 
+
+```{r}
+#| label: hist-5-facet
+penguins |> 
+  gf_histogram(~bill_length_mm,
+               xlab = "Bill Length of Penguins (mm)",
+               ylab = "Number of Penguins",
+               color = "black",
+               binwidth = 1, boundary = 0) %>%
+  gf_facet_wrap(~species, nrow = 3)
+```
+
+
+### 1.6 BONUS QUESTION
+
+Create a histogram for that separates the penguins by `sex` instead of `species` for `body_mass_g`. 
+
+
+<Insert code chunk here>
+
+
+
+
+
+***
+
+## Part 2 - Stats and Boxplots 
+
+Recall that we need to use the `mosaic` package to calculate statistics. Since we started a new session, we need to run the code to load the libraries again and load in our penguin dataset. You can go either (1) go back up to the second and third code chunks where we put that code and run them or (2) click the down arrow in the next code chunk below to run all prior code chunks. That will load the data and package. 
+
+We now have a different `goal`: we want to calculate summary statistics instead of making histograms! Luckily, the `mosaic` package lets us use our same code template structure. Our structure for all the summary statistics in this activity is `goal(y ~ x, data = mydata)` because we want summarize our variable for each species, making `species` a second variable.
+
+
+
+### 2.1 
+
+You've already seen the `mean()` function -- apply it as your `goal` as if you wanted to calculate the mean bill length for each species. Fill out the table for each part of your template structure. (In other words, think through the pieces that will go into the code, before you write any code).   
+
+Template |  Filled in with  |  Purpose
+---------|------------------|---------------------
+goal     | mean()           | to calculate the mean
+x        |                  | grouping variable (categorical)
+y        |                  | numeric variable
+mydata   |                  | name of data set
+
+
+### 2.2
+
+Use the information from 2.1 to fill in the blanks below to calculate the **mean** bill length of each species, when the blanks below follow the structure `goal( y ~ x, data = mydata`. 
+
+```{r}
+#| label: stats-bill-length
+______(_____ ~ _____, data = _____)
+```
+
+Add additional code chunks to calculate the other appropriate summary statistics.
+
+< Insert code chunk here >
+
+
+### 2.3
+
+It would be best for our boxplots to be all in one plot, with one axis. To do so, we need to change the goal in the formula template: `goal( y ~ x, data = mydata)` (just like when we calculated statistics). Run the code below to see how it differs from the one above. Then add in appropriate labels to both axes.
+
+```{r}
+#| label: side-by-side-boxplot-1
+gf_boxplot(bill_length_mm ~ species, 
+           data = penguins)
+```
+
+
+Switch the order of the variables in the formula `y ~ x` and see how it changes the boxplot. Add appropriate labels to each axes. 
+
+```{r}
+#| label: side-by-side-boxplot-2
+gf_boxplot(species ~ bill_length_mm, 
+           data = penguins)
+```
+
+
+
+## Part 3 - Synthesis
+
+Describe the distribution of bill length for *Gentoo* penguins. 
+> Insert your answer here
+
+
+
+
+
