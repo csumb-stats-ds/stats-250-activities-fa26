@@ -16,6 +16,7 @@ Start here: Run the code chunk below by clicking the green arrow in the right co
 ```{r}
 #| label: setup
 #| include: false
+library(tidyverse)
 library(mosaic)
 ```
 
@@ -23,7 +24,7 @@ library(mosaic)
 There is no output to this code; it just loads the packages we need to use. You can tell it worked by the green flashes on the side; if a `library()` function doesn't work, there will be a red color on the side and an error output.  
 
 
-If you haven't already, click on `r-orientation-student.Rproj` under the Files tab (it has the blue cube icon; you will have to re-open the .qmd file afterward). This will set the working directory to the project file location where data and other information is stored. Double check that the project is open by looking in the top right corner of R Studio. It should say "R Orientation", the name of the project. *(If you don't open a project, your code often won't run or save outputs in your project file!)*
+If you haven't already, click on `activity-1-r-orientation.Rproj` under the Files tab (it has the blue cube icon; you will have to re-open the .qmd file afterward). This will set the working directory to the project file location where data and other information is stored. Double check that the project is open by looking in the top right corner of R Studio. It should say "activity-1-r-orientation", the name of the project. *(If you don't open a project, your code often won't run or save outputs in your project file!)*
 
 
 ### 1. Help 
@@ -33,7 +34,7 @@ If you haven't already, click on `r-orientation-student.Rproj` under the Files t
 
 We have to tell our document what text is code and what text is just text. One way we can distinguish code in an .qmd file is to put it in a **code chunk**. Within a code chunk, which is set apart by a line of ` ```{r} ` to begin and a line of ` ``` ` to end, every line is read as executable R code.
 
-For Windows OS- the key combination Ctrl+Alt+I creates a new code chunk (for Mac OS Cmd+Option+I). You could instead use the green "Insert" button in the RMarkdown pane menu bar and select R to create a new code chunk. Insert a code chunk and then enter and run the code `?names`. (The code is what is inside the ` `, not including them.) What happens? 
+For Windows OS- the key combination Ctrl+Alt+I creates a new code chunk (for Mac OS Cmd+Option+I). You could instead use the green "Insert" button in the Quarto pane menu bar and select R to create a new code chunk. Insert a code chunk and then enter and run the code `?names`. (The code is what is inside the ` `, not including them.) What happens? 
 
 
 <Insert code chunk here>
@@ -54,7 +55,7 @@ Run the code below to read in the data file called "BodyTemp.csv" and call it `b
 
 ```{r}
 #| label: bodytemp-data
-body <- read.csv("BodyTemp.csv")
+body <- read_csv("BodyTemp.csv")
 ```
 
 
