@@ -3,5 +3,6 @@
 .RData
 .Ruserdata
 stat-250-activities.Rproj
+.gitignore
 ~/keys-other-do-not-push
 *-key.qmd
